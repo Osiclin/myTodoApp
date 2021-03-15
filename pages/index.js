@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import FormTitle from '../components/FormTitle'
 import RegForm from '../components/RegForm'
 import styles from '../styles/Home.module.css'
 

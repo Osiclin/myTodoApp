@@ -8,7 +8,12 @@ export default function NavContainer() {
         <div id={styles.navcontainer}>
             <Logo />
             <Menu />
-            <Hamburger />
+            <Hamburger onClick={openMenu} />
         </div>
     )
+}
+
+const openMenu = () => {
+    const menu = document.getElementById('menu')
+    console.log(menu)
 }

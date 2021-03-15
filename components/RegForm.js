@@ -28,7 +28,7 @@ const Register = (e) => {
         alert('Passwords must be the same')
     }
     else {
-        fetch('https://api.uatdrive.com:1010/users/signup', {
+        fetch('http://api.uatdrive.com:1010/users/signup', {
             method: "POST",
             body: JSON.stringify({
                 "email": email,

@@ -11,7 +11,7 @@ export default function TodoCard() {
     useEffect(() => {
         const token = sessionStorage.getItem("token")
 
-        fetch("http://api.uatdrive.com:1010/todos?page=2", {
+        fetch("http://api.uatdrive.com:1010/todos", {
         method: "GET",
         headers: {
         "Authorization": `Bearer ${token}`,
@@ -23,17 +23,17 @@ export default function TodoCard() {
         .catch(err => console.log(err))
 
         console.log(todos)
-    }, [])
+    })
 
     return(
         <>
         {todos.map((todo) => 
             <div className={styles.todocard}>
-                    <TodoDate date="12/3/2021"/>
-                    <TodoTitle title={todo.Title}/>
-                    <TodoDetails details={todo.todoDetails} />
-                    <TodoStatus isCompleted="Complete" />
-                </div>
+                <TodoDate date="12/3/2021"/>
+                <TodoTitle title={todo.Title}/>
+                <TodoDetails details={todo.todoDetails} />
+                <TodoStatus isCompleted="Complete" />
+            </div>
         )}
         </>
     )
