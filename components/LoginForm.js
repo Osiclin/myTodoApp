@@ -31,7 +31,7 @@ const Login = (e) => {
     if(password.length < 8) {
         alert('Password should be more than 7 letters')
     } else {
-        fetch("http://api.uatdrive.com:1010/users/login", {
+        fetch("https://api.uatdrive.com:1010/users/login", {
             method: "POST",
             body: JSON.stringify({
               "email": email,

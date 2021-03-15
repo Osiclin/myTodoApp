@@ -30,7 +30,7 @@ const CreateTodo = (e) => {
     const todoDetails = document.getElementsByClassName('todoDetails').value
 
     if(title !== "" && todoDetails !== "") {
-        fetch("http://api.uatdrive.com:1010/todos", {
+        fetch("https://api.uatdrive.com:1010/todos", {
         method: "POST",
         body: JSON.stringify({
         "Title": title,
