@@ -23,7 +23,7 @@ export default function TodoCard() {
         .catch(err => console.log(err))
 
         console.log(todos)
-    })
+    }, [])
 
     return(
         <>
