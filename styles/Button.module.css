@@ -1,0 +1,14 @@
+.submit{
+    width: 250px;
+    display: block;
+    background-color: black;
+    color: white;
+    border: none;
+    outline: none;
+    margin: 0 auto;
+    padding: 0.8rem 6rem;
+}
+
+.buttoncontainer{
+    width: 100%;
+}
