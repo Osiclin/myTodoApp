@@ -44,4 +44,5 @@ const Register = (e) => {
             
         }
     
+        window.location.assign("/login")
 }

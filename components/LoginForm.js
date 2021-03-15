@@ -46,5 +46,6 @@ const Login = (e) => {
         .catch(err => console.log(err))
     }
 
+    window.location.assign('/mytodos')
     
 }
