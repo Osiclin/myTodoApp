@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import FormTitle from '../components/FormTitle'
 import LoginForm from '../components/LoginForm'
 import styles from '../styles/Home.module.css'
 
@@ -13,8 +12,6 @@ export default function Login() {
         <main className={styles.main}>
             <LoginForm />
         </main>
-
-        
 
         </div>
     )

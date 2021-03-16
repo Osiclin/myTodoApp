@@ -3,9 +3,49 @@ import Button from './Button'
 import FormTitle from "./FormTitle";
 import Textarea from "./Textarea";
 import styles from '../styles/CreateForm.module.css'
-
+import React, { useState } from 'react'
 
 export default function CreateForm() {
+    const [saveStatus, setSavestatus] = useState("Save")
+
+
+    const CreateTodo = (e) => {
+        e.preventDefault();
+
+        const token = sessionStorage.getItem("token")
+        const title = document.getElementsByClassName('title')[0].value
+        const todoDetails = document.getElementById('todoDetails').value
+        
+    
+        if(title !== "" && todoDetails !== "") {
+            setSavestatus("Saving...")
+    
+            fetch("http://api.uatdrive.com:1010/todos", {
+            method: "POST",
+            body: JSON.stringify({
+                Title: title,
+                todoDetails: todoDetails,
+            }),
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json; charset=UTF-8"
+            },
+            })
+            .then(response => response.json())
+            .then(data => (data))
+            .catch(err => {
+                if(err) {
+                    setSavestatus('Oops!!! Not a user')
+                } else {
+            setTimeout(() => {
+                setSavestatus('Saved')
+            },3000)
+            setSavestatus('Save')}})
+        } else {
+            setSavestatus('Save')
+        }   
+    }
+
 
     return(
         <form onSubmit={CreateTodo}>
@@ -13,36 +53,13 @@ export default function CreateForm() {
             <div className={styles.datentitle}>
                 <div>
                 <label htmlFor="date">Date</label><br />
-                <input htmlFor="date" class="title" type="date" name="date" />
+                <input htmlFor="date" className={styles.date} type="date" name="date" />
                 </div>
-                <Input for="title" class="todoDetails" label="Title" type="title" name="title" />
+                <Input for="title" class="title" label="Title" type="title" name="title" />
             </div>
-            <Textarea />
+            <Textarea id="todoDetails"/>
             <Button value="Save" />
         </form>
     )
 }
 
-const CreateTodo = (e) => {
-    e.preventDefault();
-    const token = sessionStorage.getItem("token")
-    const title = document.getElementsByClassName('title').value
-    const todoDetails = document.getElementsByClassName('todoDetails').value
-
-    if(title !== "" && todoDetails !== "") {
-        fetch("https://api.uatdrive.com:1010/todos", {
-        method: "POST",
-        body: JSON.stringify({
-        "Title": title,
-        "todoDetails": todoDetails
-        }),
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json; charset=utf-8"
-        }
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
-    }
-}

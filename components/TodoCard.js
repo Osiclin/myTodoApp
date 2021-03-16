@@ -4,6 +4,7 @@ import TodoStatus from './TodoStatus'
 import TodoDetails from './TodoDetails'
 import React, { useState, useEffect } from 'react'
 import styles from '../styles/TodoCard.module.css'
+import Link from 'next/link'
 
 export default function TodoCard() {
     const [todos, setTodos] = useState([])
@@ -21,20 +22,22 @@ export default function TodoCard() {
         .then(response => response.json())
         .then(todos => setTodos(todos.data))
         .catch(err => console.log(err))
-
-        console.log(todos)
     }, [])
 
     return(
-        <>
+        <ul className={styles.todoclasscontainer}>
         {todos.map((todo) => 
-            <div className={styles.todocard}>
-                <TodoDate date="12/3/2021"/>
-                <TodoTitle title={todo.Title}/>
-                <TodoDetails details={todo.todoDetails} />
-                <TodoStatus isCompleted="Complete" />
-            </div>
-        )}
-        </>
+            <Link href="/index" key={todo._id}>
+                <a>
+                    <li className={styles.todocard} >
+                        <TodoDate date={new Date(todo.createdAt).toLocaleDateString(undefined, "short")}/>
+                        <TodoTitle title={todo.Title}/>
+                        <TodoDetails details={todo.todoDetails} />
+                        <TodoStatus isCompleted="Complete" />
+                    </li>
+                </a>
+            </Link>
+            )}
+        </ul>
     )
 }

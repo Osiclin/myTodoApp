@@ -31,7 +31,7 @@ ul {
 }
 
 input{
-  width: 400px;
+  width: 350px;
   height: 2.4rem;
   outline: 0px;
   padding: 0.2rem;
@@ -45,6 +45,10 @@ textarea::-webkit-scrollbar{
 
 textarea::-webkit-scrollbar-thumb{
   background-color: black;
+}
+
+@media only screen and (max-width: 800px) {
+  
 }
 
 @media only screen and (max-width: 600px) {

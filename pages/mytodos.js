@@ -2,7 +2,6 @@ import Head from 'next/head'
 import TodoCard from '../components/TodoCard'
 import FormTitle from '../components/FormTitle'
 import styles from '../styles/Home.module.css'
-import styling from '../styles/TodoCard.module.css'
 
 export default function Mytodos() {
     return(
@@ -13,7 +12,7 @@ export default function Mytodos() {
 
             <main className={styles.maintodo}>
                 <FormTitle title="My Todos" />
-                <div className={styling.todocardwrapper}>
+                <div>
                     <TodoCard />
                 </div>
             </main>

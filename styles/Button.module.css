@@ -6,9 +6,16 @@
     border: none;
     outline: none;
     margin: 0 auto;
-    padding: 0.8rem 6rem;
+    padding: 0.8rem;
+    text-align: center;
 }
 
 .buttoncontainer{
     width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .submit{
+        width: 200px;
+    }
 }
