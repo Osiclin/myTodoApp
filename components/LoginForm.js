@@ -42,13 +42,7 @@ export default function LoginForm() {
                     window.location.assign('/mytodos')
                 }
             })
-            .catch(err => {
-                if(!err) {
-                    window.location.assign('/mytodos')
-                } else {
-                    setLoginStatus('User not found')
-                }
-            })
+            .catch(err => console.log(err))
         }
                 
     }
