@@ -34,6 +34,11 @@ export default function LoginForm() {
                 .then(data => {
                     if (!data.token) {
                         setLoginStatus('User not found')
+                        setTimeout(() => {
+                            setLoginStatus('Login')
+                        }, 3000)
+                        
+                        
                     } else {
                         setToken(data.token)
                         window.location.assign("/mytodos")
