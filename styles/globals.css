@@ -47,9 +47,6 @@ textarea::-webkit-scrollbar-thumb{
   background-color: black;
 }
 
-@media only screen and (max-width: 800px) {
-  
-}
 
 @media only screen and (max-width: 600px) {
   input{

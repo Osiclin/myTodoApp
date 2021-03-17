@@ -10,6 +10,10 @@ export default function RegForm() {
     const Register = (e) => {
         e.preventDefault();
     
+        const password = document.getElementsByClassName('password')[0].value
+        const retype = document.getElementsByClassName('retype')[0].value
+        const email = document.getElementsByClassName('email')[0].value
+
         if(password.length < 8) {
             alert('Password must be more than 7 letters')
         } else if(password !== retype) {
@@ -18,8 +22,6 @@ export default function RegForm() {
         else {
             setRegstatus("Processing...")
         
-            const password = document.getElementsByClassName('password')[0].value
-            const email = document.getElementsByClassName('email')[0].value
             fetch('http://api.uatdrive.com:1010/users/signup', {
                 method: "POST",
                 body: JSON.stringify({

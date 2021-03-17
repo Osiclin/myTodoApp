@@ -1,7 +1,7 @@
 import Input from "./Input";
 import Button from './Button'
-import FormTitle from "./FormTitle";
 import React, { useState, useEffect } from 'react'
+import FormTitle from '../components/FormTitle'
 
 export default function LoginForm() {
     const [token, setToken] = useState('')
@@ -12,6 +12,7 @@ export default function LoginForm() {
     const Login = (e) => {
         e.preventDefault();
         setLoginStatus("Loading...")
+        
         const password = document.getElementsByClassName('password')[0].value
         const email = document.getElementsByClassName('email')[0].value
     
@@ -29,15 +30,18 @@ export default function LoginForm() {
                 }
             })
             .then(res => {
-                if(!res.ok) {
+                if(res.ok) {
                     setLoginStatus('Oops!!! Not a user') 
                 } else { 
                     res.json()
                     }})
-            .then(data => sessionStorage.setItem("token", data.token))
+            .then(data => 
+                sessionStorage.setItem("token", data.token
+                ))
             .catch(err => {
                 if(err) {
                 setLoginStatus('Login')
+                console.log(err)
             } else {
                 window.location.assign("/mytodos")
             }})  
@@ -50,7 +54,7 @@ export default function LoginForm() {
     useEffect(() => {
         const getToken = sessionStorage.getItem("token")
         setToken(getToken)
-    })
+    }, [token])
 
 
     return(
