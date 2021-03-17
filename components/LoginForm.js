@@ -11,41 +11,45 @@ export default function LoginForm() {
 
     const Login = (e) => {
         e.preventDefault();
-        setLoginStatus("Loading...")
         
         const password = document.getElementsByClassName('password')[0].value
         const email = document.getElementsByClassName('email')[0].value
     
         if (password.length < 8) {
             alert('Password should be more than 7 letters')
-            setLoginStatus("Login")
         } else {
-                fetch("http://api.uatdrive.com:1010/users/login", {
-                    method: "POST",
-                    body: JSON.stringify({
-                    email: email,
-                    password: password
-                    }),
-                    headers: {
-                        "Content-Type": "application/json; charset=utf-8"
-                    }
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (!data.token) {
-                        setLoginStatus('User not found')
-                        setTimeout(() => {
-                            setLoginStatus('Login')
-                        }, 3000)
-                        
-                        
-                    } else {
-                        setToken(data.token)
-                        window.location.assign("/mytodos")
-                    }
-                })
-                .catch(err => console.log(err)) 
-            }
+            setLoginStatus("Loading...")
+
+            fetch("http://api.uatdrive.com:1010/users/login", {
+                method: "POST",
+                body: JSON.stringify({
+                email: email,
+                password: password
+                }),
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.token) {
+                    setLoginStatus('User not found')
+                    setTimeout(() => {
+                        setLoginStatus('Login')
+                    }, 3000)   
+                } else {
+                    setToken(data.token)
+                    window.location.assign('/mytodos')
+                }
+            })
+            .catch(err => {
+                if(!err) {
+                    window.location.assign('/mytodos')
+                } else {
+                    setLoginStatus('User not found')
+                }
+            })
+        }
                 
     }
 
