@@ -11,6 +11,7 @@ export default function CreateForm() {
 
     const CreateTodo = (e) => {
         e.preventDefault();
+        setSavestatus('Saving...')
 
         const token = sessionStorage.getItem("token")
         const title = document.getElementsByClassName('title')[0].value

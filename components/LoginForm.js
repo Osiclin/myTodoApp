@@ -18,6 +18,7 @@ export default function LoginForm() {
     
         if (password.length < 8) {
             alert('Password should be more than 7 letters')
+            setLoginStatus("Login")
         } else {
                 fetch("http://api.uatdrive.com:1010/users/login", {
                     method: "POST",
@@ -35,7 +36,6 @@ export default function LoginForm() {
                         setLoginStatus('User not found')
                     } else {
                         setToken(data.token)
-                        setLoginStatus('Loading...')
                         window.location.assign("/mytodos")
                     }
                 })
