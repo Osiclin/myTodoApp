@@ -35,10 +35,10 @@ export default function RegForm() {
                 .then(res => res.json())
                 .then(data => console.log(data))
                 .catch(err => console.log(err))
-                
-            }
+                window.location.assign("/login")
+        }
         
-        window.location.assign("/login")
+        
     }
 
 

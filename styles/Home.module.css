@@ -1,5 +1,5 @@
 .container {
-  min-height: 80vh;
+  min-height: 100vh;
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
@@ -23,5 +23,5 @@
   display: grid;
   grid-template-columns: 1fr;
   z-index: -1;
-  padding: 2% 6%;
+  padding: 100px 6%;
 }

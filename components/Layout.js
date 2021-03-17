@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import NavContainer from '../components/NavContainer'
 import styles from '../styles/Layout.module.css'
 
 export default function Layout({ children }) {
@@ -8,7 +7,6 @@ export default function Layout({ children }) {
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
-            <NavContainer />
             { children }
         </div>
     )
