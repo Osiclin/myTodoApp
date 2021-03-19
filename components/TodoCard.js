@@ -12,7 +12,7 @@ export default function TodoCard() {
     useEffect(() => {
         const token = sessionStorage.getItem("token")
 
-        fetch("http://api.uatdrive.com:1010/todos", {
+        fetch("https://api.uatdrive.com:1012/todos", {
         method: "GET",
         headers: {
         "Authorization": `Bearer ${token}`,
