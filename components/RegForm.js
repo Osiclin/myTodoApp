@@ -22,7 +22,7 @@ export default function RegForm() {
         else {
             setRegstatus("Processing...")
         
-            fetch('http://api.uatdrive.com:1010/users/signup', {
+            fetch('https://api.uatdrive.com:1012/users/signup', {
                 method: "POST",
                 body: JSON.stringify({
                     "email": email,

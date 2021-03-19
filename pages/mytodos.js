@@ -27,6 +27,10 @@ export default function Mytodos() {
                 <Link href="/mytodos">
                     <a><li>My Todos</li></a>
                 </Link>
+
+                <Link href="/">
+                    <a><li>Sign Out</li></a>
+                </Link>
                 
             </ul>
             <div id={stylesham.hamburger}>

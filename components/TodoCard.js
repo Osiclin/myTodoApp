@@ -27,7 +27,7 @@ export default function TodoCard() {
     return(
         <ul className={styles.todoclasscontainer}>
         {todos.map((todo) => 
-            <Link href="/index" key={todo._id}>
+            <Link href="/" key={todo._id}>
                 <a>
                     <li className={styles.todocard} >
                         <TodoDate date={new Date(todo.createdAt).toLocaleDateString(undefined, "short")}/>

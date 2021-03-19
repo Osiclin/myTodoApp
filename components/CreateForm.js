@@ -21,7 +21,7 @@ export default function CreateForm() {
         if(title !== "" && todoDetails !== "") {
             setSavestatus("Saving...")
     
-            fetch("http://api.uatdrive.com:1010/todos", {
+            fetch("https://api.uatdrive.com:1012/todos", {
             method: "POST",
             body: JSON.stringify({
                 Title: title,
