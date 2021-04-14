@@ -7,6 +7,8 @@ import React, { useState } from 'react'
 
 export default function CreateForm() {
     const [saveStatus, setSavestatus] = useState("Save")
+    const [message, setMessage] = useState('Saving')
+    const [msgclass, setMsgClass] = useState(styles.success)
 
 
     const CreateTodo = (e) => {
@@ -50,6 +52,9 @@ export default function CreateForm() {
 
     return(
         <form onSubmit={CreateTodo}>
+            {/* <div className={msgclass}>
+                <p>{message}</p>
+            </div> */}
             <FormTitle title="Create Todo" />
             <div className={styles.datentitle}>
                 <div>

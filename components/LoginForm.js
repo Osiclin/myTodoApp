@@ -5,15 +5,15 @@ import FormTitle from '../components/FormTitle'
 
 export default function LoginForm() {
     const [token, setToken] = useState()
+    const [user, setUser] = useState()
     const [loginStatus, setLoginStatus] = useState("Login")
-
-    
 
     const Login = (e) => {
         e.preventDefault();
         
         const password = document.getElementsByClassName('password')[0].value
         const email = document.getElementsByClassName('email')[0].value
+        setUser(email)
     
         if (password.length < 8) {
             alert('Password should be more than 7 letters')
@@ -36,7 +36,7 @@ export default function LoginForm() {
                     setLoginStatus('User not found')
                     setTimeout(() => {
                         setLoginStatus('Login')
-                    }, 3000)   
+                    }, 3000)
                 } else {
                     setToken(data.token)
                     window.location.assign('/mytodos')
@@ -48,7 +48,8 @@ export default function LoginForm() {
     }
 
     useEffect(() => {
-        sessionStorage.setItem("token", token)                
+        sessionStorage.setItem("token", token)
+        sessionStorage.setItem("user", user)           
     })
 
 

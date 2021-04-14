@@ -8,8 +8,9 @@ import styleslogo from '../styles/Logo.module.css'
 import stylesham from '../styles/Hamburger.module.css'
 import stylesmenu from '../styles/Menu.module.css'
 
-
 export default function Mytodos() {
+    const user = sessionStorage.getItem("user");
+    
     return(
         <div className={styles.container}>
             <div id={stylesnavcontainer.navcontainer}>
@@ -42,7 +43,7 @@ export default function Mytodos() {
             </Head>
 
             <main className={styles.maintodo}>
-                <FormTitle title="My Todos" />
+                <FormTitle title={user + "'s" + " Todo"} />
                 <div>
                     <TodoCard />
                 </div>
