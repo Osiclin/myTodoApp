@@ -39,17 +39,16 @@ export default function LoginForm() {
                     }, 3000)
                 } else {
                     setToken(data.token)
+                    sessionStorage.setItem("user", user)  
                     window.location.assign('/mytodos')
                 }
             })
             .catch(err => console.log(err))
-        }
-                
+        }         
     }
 
     useEffect(() => {
         sessionStorage.setItem("token", token)
-        sessionStorage.setItem("user", user)           
     })
 
 

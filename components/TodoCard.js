@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react'
 import styles from '../styles/TodoCard.module.css'
 import Link from 'next/link'
 import Buttons from './Buttons'
+import Blob from './Blob'
 
 export default function TodoCard() {
     const [todos, setTodos] = useState([])
@@ -31,6 +32,7 @@ export default function TodoCard() {
             <Link href="/" key={todo._id}>
                 <a>
                     <li className={styles.todocard} >
+                        <Blob />
                         <TodoStatus isCompleted="Complete" />
                         <TodoDate date={new Date(todo.createdAt).toLocaleDateString(undefined, "short")}/>
                         <TodoTitle title={todo.Title}/>
