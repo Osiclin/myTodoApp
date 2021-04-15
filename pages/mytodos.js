@@ -7,10 +7,16 @@ import Link from 'next/link'
 import styleslogo from '../styles/Logo.module.css'
 import stylesham from '../styles/Hamburger.module.css'
 import stylesmenu from '../styles/Menu.module.css'
+import { useEffect, useState } from 'react'
 
 export default function Mytodos() {
-    // const user = sessionStorage.getItem("user");
-    
+    const [user, setUser] = useState()
+
+    useEffect(() => {
+        const user = sessionStorage.getItem("user");
+        setUser(user)
+    }, [])
+
     return(
         <div className={styles.container}>
             <div id={stylesnavcontainer.navcontainer}>
@@ -43,11 +49,10 @@ export default function Mytodos() {
             </Head>
 
             <main className={styles.maintodo}>
-                <FormTitle title="hi" />
-                {/* <FormTitle title={user + "'s" + " Todo"} /> */}
-                <div>
-                    <TodoCard />
-                </div>
+
+                <FormTitle title={user + "'s" + " Todo"} />
+                <TodoCard />
+                
             </main>
         
         </div>

@@ -1,16 +1,8 @@
-/* .blobdiv{
-    border: 1px solid black;
-    position: abso;
-    height: 6rem;
-} */
-
 .blob{
     height: 12rem;
     width: 12rem;
     border-radius: 50%;
     position: absolute;
-    /* right: -15%;
-    top: -65%; */
     top: -8rem;
     right: -4rem;
     background: transparent linear-gradient(180deg, #F679A3 0%, #FFB344 100%) 0% 0% no-repeat padding-box;

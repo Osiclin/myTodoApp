@@ -5,7 +5,6 @@ import FormTitle from '../components/FormTitle'
 
 export default function LoginForm() {
     const [token, setToken] = useState()
-    const [user, setUser] = useState()
     const [loginStatus, setLoginStatus] = useState("Login")
 
     const Login = (e) => {
@@ -13,7 +12,6 @@ export default function LoginForm() {
         
         const password = document.getElementsByClassName('password')[0].value
         const email = document.getElementsByClassName('email')[0].value
-        setUser(email)
     
         if (password.length < 8) {
             alert('Password should be more than 7 letters')
@@ -39,7 +37,7 @@ export default function LoginForm() {
                     }, 3000)
                 } else {
                     setToken(data.token)
-                    sessionStorage.setItem("user", user)  
+                    sessionStorage.setItem("user", email)  
                     window.location.assign('/mytodos')
                 }
             })
