@@ -11,6 +11,10 @@ import stylesmenu from '../styles/Menu.module.css'
 export default function Login() {
     return(
         <div className={styles.container}>
+            <Head>
+                <title>myTodo | Login</title>
+            </Head>
+
             <div id={stylesnavcontainer.navcontainer}>
             <div>
                 <Link href="/">
@@ -28,9 +32,6 @@ export default function Login() {
                 &#9776;
             </div>
         </div>
-        <Head>
-            <title>myTodo | Login</title>
-        </Head>
 
         <main className={styles.main}>
             <LoginForm />

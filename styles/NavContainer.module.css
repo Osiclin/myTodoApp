@@ -6,4 +6,5 @@
     justify-content: space-between;
     padding: 1rem 4%;
     background-color: #f8f8f8;
+    z-index: 5;
 }

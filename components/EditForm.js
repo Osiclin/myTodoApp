@@ -5,13 +5,15 @@ import Textarea from "./Textarea";
 import styles from '../styles/CreateForm.module.css'
 import React, { useState } from 'react'
 
-export default function CreateForm() {
-    const [message, setMessage] = useState()
-    const [msgclass, setMsgClass] = useState(styles.messagehide)
+export default function EditForm() {
+    const [saveStatus, setSavestatus] = useState("Save")
+    const [message, setMessage] = useState('Saving')
+    const [msgclass, setMsgClass] = useState(styles.success)
 
 
     const CreateTodo = (e) => {
         e.preventDefault();
+        setSavestatus('Saving...')
 
         const token = sessionStorage.getItem("token")
         const title = document.getElementsByClassName('title')[0].value
@@ -19,14 +21,13 @@ export default function CreateForm() {
         
     
         if(title !== "" && todoDetails !== "") {
-            setMsgClass(styles.saving)
-            setMessage("Saving...")
+            setSavestatus("Saving...")
     
             fetch("https://api.uatdrive.com:1012/todos", {
             method: "POST",
             body: JSON.stringify({
                 Title: title,
-                TodoDetails: todoDetails,
+                todoDetails: todoDetails,
             }),
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -34,30 +35,27 @@ export default function CreateForm() {
             },
             })
             .then(response => response.json())
-            .then(data => {
-                (data)
-                setTimeout(() => {
-                    setMsgClass(styles.success)
-                    setMessage('Saved')
-                },2000)
-                setTimeout(() => {
-                    setMsgClass(styles.messagehide)
-                    setMessage('Saved')
-                },5000)
-            })
-            .catch(err => setMessage(err))
+            .then(data => (data))
+            .catch(err => {
+                if(err) {
+                    setSavestatus('Oops!!! Not a user')
+                } else {
+            setTimeout(() => {
+                setSavestatus('Saved')
+            },3000)
+            setSavestatus('Save')}})
         } else {
-            setMsgClass(styles.error)
-            setMessage('Please fill out title & todo details')
+            setSavestatus('Save')
         }   
     }
 
+
     return(
         <form onSubmit={CreateTodo}>
-            <div className={msgclass}>
+            {/* <div className={msgclass}>
                 <p>{message}</p>
-            </div>
-            <FormTitle title="Create Todo" />
+            </div> */}
+            <FormTitle title="Edit Todo" />
             <div className={styles.datentitle}>
                 <div>
                 <label htmlFor="date">Date</label><br />

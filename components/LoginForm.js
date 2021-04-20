@@ -2,10 +2,12 @@ import Input from "./Input";
 import Button from './Button'
 import React, { useState, useEffect } from 'react'
 import FormTitle from '../components/FormTitle'
+import styles from '../styles/CreateForm.module.css'
 
 export default function LoginForm() {
     const [token, setToken] = useState()
-    const [loginStatus, setLoginStatus] = useState("Login")
+    const [message, setMessage] = useState()
+    const [msgclass, setMsgClass] = useState(styles.messagehide)
 
     const Login = (e) => {
         e.preventDefault();
@@ -14,9 +16,11 @@ export default function LoginForm() {
         const email = document.getElementsByClassName('email')[0].value
     
         if (password.length < 8) {
-            alert('Password should be more than 7 letters')
+            setMsgClass(styles.error)
+            setMessage('Password should be more than 7 letters')
         } else {
-            setLoginStatus("Loading...")
+            setMsgClass(styles.saving) //loading not saving
+            setMessage("Loading...")
 
             fetch("https://api.uatdrive.com:1012/users/login", {
                 method: "POST",
@@ -31,14 +35,19 @@ export default function LoginForm() {
             .then(res => res.json())
             .then(data => {
                 if (!data.token) {
-                    setLoginStatus('User not found')
+                    setMsgClass(styles.error)
+                    setMessage('User not found')
                     setTimeout(() => {
-                        setLoginStatus('Login')
+                        setMsgClass(styles.messagehide)
                     }, 3000)
                 } else {
                     setToken(data.token)
-                    sessionStorage.setItem("user", email)  
-                    window.location.assign('/mytodos')
+                    setMsgClass(styles.success)
+                    setMessage('User logged in')
+                    sessionStorage.setItem("user", email)
+                    setTimeout(() => {
+                        window.location.assign('/todos')
+                    }, 2000)  
                 }
             })
             .catch(err => console.log(err))
@@ -52,10 +61,13 @@ export default function LoginForm() {
 
     return(
         <form onSubmit={Login}>
+            <div className={msgclass}>
+                <p>{message}</p>
+            </div>
             <FormTitle title="Please Login to continue" />
             <Input for="email" class="email" label="Email" type="email" name="email" />
             <Input for="password" class="password" label="Password" type="password" name="password" />
-            <Button value={loginStatus}/>
+            <Button value="Login"/>
         </form>
     )
 }

@@ -11,6 +11,9 @@ import stylesmenu from '../styles/Menu.module.css'
 export default function Home() {
   return (
     <div className={styles.container}>
+      <Head>
+        <title>myTodo | Register</title>
+      </Head>
       <div id={stylesnavcontainer.navcontainer}>
             <div>
                 <Link href="/">
@@ -28,9 +31,7 @@ export default function Home() {
                 &#9776;
             </div>
         </div>
-      <Head>
-        <title>myTodo</title>
-      </Head>
+      
 
       <main className={styles.main}>
         <RegForm />

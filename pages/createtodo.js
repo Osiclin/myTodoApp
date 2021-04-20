@@ -11,6 +11,10 @@ import stylesmenu from '../styles/Menu.module.css'
 export default function Createtodo() {
     return(
         <div className={styles.container}>
+            <Head>
+                <title>myTodo | Create Todo</title>
+            </Head>
+
             <div id={stylesnavcontainer.navcontainer}>
             <div>
                 <Link href="/">
@@ -23,7 +27,7 @@ export default function Createtodo() {
                     <a><li>Create Todo</li></a>
                 </Link>
                 
-                <Link href="/mytodos">
+                <Link href="/todos">
                     <a><li>My Todos</li></a>
                 </Link>
 
@@ -36,9 +40,6 @@ export default function Createtodo() {
                 &#9776;
             </div>
         </div>
-            <Head>
-                <title>myTodo | Create Todo</title>
-            </Head>
 
             <main className={styles.main}>
                 <CreateForm />

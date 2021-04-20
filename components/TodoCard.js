@@ -4,14 +4,23 @@ import TodoStatus from './TodoStatus'
 import TodoDetails from './TodoDetails'
 import React, { useState, useEffect } from 'react'
 import styles from '../styles/TodoCard.module.css'
-import Link from 'next/link'
 import Blob from './Blob'
+import Link from 'next/link'
+import FormTitle from './FormTitle'
 
 export default function TodoCard() {
     const [todos, setTodos] = useState([])
+    const [user, setUser] = useState()
 
-    const  DeleteTodo = () => {
-        alert('hey')
+    const  DeleteTodo = (id) => {
+        const token = sessionStorage.getItem("token")
+
+        fetch(`https://api.uatdrive.com:1012/todos/${id}`, {
+            method: "DELETE",
+            headers: {
+            "Authorization": `Bearer ${token}`,
+            }
+        }).then(response => response.json())
     }
 
     const EditTodo = () => {
@@ -33,28 +42,40 @@ export default function TodoCard() {
             setTodos(todos.data)
             console.log(todos)})
         .catch(err => console.log(err))
+    }, [todos])
+
+    useEffect(() => {
+        const user = sessionStorage.getItem("user");
+        setUser(user)
     }, [])
 
     return(
-        <ul className={styles.todoclasscontainer}>
-        {todos.map((todo) => 
-            <Link href="/" key={todo.user_id}>
-                <a>
-                    <li className={styles.todocard} >
+        <>
+            {/* <FormTitle title={user + "'s" + " Todo"} /> */}
+            <FormTitle title={`${user}'s Todo`} />
+            <ul className={styles.todoclasscontainer}>
+                
+                {todos.map((todo) => 
+                    
+                    <li className={styles.todocard} key={todo._id}>
                         <Blob />
                         <TodoStatus isCompleted={todo.Status} />
                         <TodoDate date={new Date(todo.createdAt).toLocaleDateString(undefined, "short")}/>
                         <TodoTitle title={todo.Title}/>
-                        <TodoDetails details={todo.todoDetails} />
+                        <TodoDetails details={todo.TodoDetails} />
                         <div className={styles.buttons}>
-                            <button className={styles.edit} onClick={EditTodo}>Edit</button>
-                            <button className={styles.delete} onClick={DeleteTodo}>Delete</button>
+                            <Link href="/todos/edit">
+                                <a>
+                                    <button className={styles.edit} onClick={() => EditTodo(todo._id)}>Edit</button>
+                                </a>
+                            </Link>
+                            <button className={styles.delete} onClick={() => DeleteTodo(todo._id)}>Delete</button>
                         </div>
                     </li>
-                </a>
-            </Link>
-            )}
-        </ul>
+                    
+                )}
+            </ul>
+        </>
     )
 }
 
