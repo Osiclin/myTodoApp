@@ -6,8 +6,17 @@ import Link from 'next/link'
 import styleslogo from '../../styles/Logo.module.css'
 import stylesham from '../../styles/Hamburger.module.css'
 import stylesmenu from '../../styles/Menu.module.css'
+import { useEffect } from 'react'
 
 export default function Mytodos() {
+    useEffect(() => {
+        const token = sessionStorage.getItem("token")
+        console.log(token)
+        if (token == "undefined") {
+            window.location.assign('/')
+        } else {}
+    }, [])
+
     return(
         <div className={styles.container}>
             <Head>

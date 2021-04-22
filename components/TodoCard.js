@@ -33,23 +33,27 @@ export default function TodoCard() {
         let mounted = true
         const token = sessionStorage.getItem("token")
 
-        fetch("https://api.uatdrive.com:1012/todos/current/user", {
-            method: "GET",
-            headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then(response => response.json())
-        .then(todos => {
-            if (mounted) {
-                setTodos(todos.data)
-            }
-        })
-        .catch(err => console.log(err))
+        if (!token) {
+            return window.location.assign('/')
+        } else {
+            fetch("https://api.uatdrive.com:1012/todos/current/user", {
+                method: "GET",
+                headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json; charset=utf-8"
+                }
+            })
+            .then(response => response.json())
+            .then(todos => {
+                if (mounted) {
+                    setTodos(todos.data)
+                }
+            })
+            .catch(err => console.log(err))
 
-        setLoading(false)
-        return () => mounted = false
+            setLoading(false)
+            return () => mounted = false
+        }
     }, [])
 
     useEffect(() => {

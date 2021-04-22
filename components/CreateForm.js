@@ -3,13 +3,20 @@ import Button from './Button'
 import FormTitle from "./FormTitle";
 import Textarea from "./Textarea";
 import styles from '../styles/CreateForm.module.css'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function CreateForm() {
     const [message, setMessage] = useState()
     const [msgclass, setMsgClass] = useState(styles.messagehide)
 
-
+    useEffect(() => {
+        const token = sessionStorage.getItem("token")
+        console.log(token)
+        if (token == "undefined") {
+            window.location.assign('/')
+        } else {}
+    }, [])
+    
     const CreateTodo = (e) => {
         e.preventDefault();
 
