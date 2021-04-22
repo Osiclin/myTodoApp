@@ -18,14 +18,15 @@ export default function TodoCard() {
         const token = sessionStorage.getItem("token")
         const newTodos = todos.filter(todo => todo._id !== id)
 
-        setTodos(newTodos)
-
-        fetch(`https://api.uatdrive.com:1012/todos/edit/${id}`, {
+        fetch(`https://api.uatdrive.com:1012/todos/${id}`, {
             method: "DELETE",
             headers: {
             "Authorization": `Bearer ${token}`,
             }
-        }).then(response => response.json())
+        }).then(response => {
+            response.json()
+            setTodos(newTodos)
+        })
     }
 
     useEffect(() => {
