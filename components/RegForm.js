@@ -16,11 +16,14 @@ export default function RegForm() {
         const email = document.getElementsByClassName('email')[0].value
 
         if(password.length < 8) {
-            alert('Password must be more than 7 letters')
+            setMsgClass(styles.error)
+            setMessage('Password must be more than 7 letters')
+            return
         } else if(password !== retype) {
-            alert('Passwords must be the same')
-        }
-        else {
+            setMsgClass(styles.error)
+            setMessage('Passwords must be the same')
+            return
+        } else {
             setMsgClass(styles.saving) //Registering not saving
             setMessage("Processing...")
         
@@ -38,7 +41,7 @@ export default function RegForm() {
                     res.json()
                     setTimeout(() => {
                         setMsgClass(styles.success)
-                        setMessage(res.message)
+                        setMessage('User created successfully')
                     }, 2000) 
                 })
                 .then(data => console.log(data))

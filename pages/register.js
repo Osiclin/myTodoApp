@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import LoginForm from '../components/LoginForm'
+import RegForm from '../components/RegForm'
 import styles from '../styles/Home.module.css'
 import stylesnavcontainer from '../styles/NavContainer.module.css'
 import Link from 'next/link'
@@ -8,14 +8,13 @@ import stylesham from '../styles/Hamburger.module.css'
 import stylesmenu from '../styles/Menu.module.css'
 
 
-export default function Login() {
-    return(
-        <div className={styles.container}>
-            <Head>
-                <title>myTodo | Login</title>
-            </Head>
-
-            <div id={stylesnavcontainer.navcontainer}>
+export default function Home() {
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>myTodo | Register</title>
+      </Head>
+      <div id={stylesnavcontainer.navcontainer}>
             <div>
                 <Link href="/">
                     <a id={styleslogo.logotext}>myTodo</a>
@@ -24,7 +23,7 @@ export default function Login() {
             <ul id={stylesmenu.menu}>
 
                 <Link href="/">
-                    <a><li>Register</li></a>
+                    <a><li>Login</li></a>
                 </Link>
                 
             </ul>
@@ -32,11 +31,13 @@ export default function Login() {
                 &#9776;
             </div>
         </div>
+      
 
-        <main className={styles.main}>
-            <LoginForm />
-        </main>
+      <main className={styles.main}>
+        <RegForm />
+      </main>
 
-        </div>
-    )
+      
+    </div>
+  )
 }

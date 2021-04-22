@@ -21,7 +21,7 @@ export default function CreateForm() {
         if(title !== "" && todoDetails !== "") {
             setMsgClass(styles.saving)
             setMessage("Saving...")
-    
+            
             fetch("https://api.uatdrive.com:1012/todos", {
             method: "POST",
             body: JSON.stringify({
@@ -42,7 +42,6 @@ export default function CreateForm() {
                 },2000)
                 setTimeout(() => {
                     setMsgClass(styles.messagehide)
-                    setMessage('Saved')
                 },5000)
             })
             .catch(err => setMessage(err))

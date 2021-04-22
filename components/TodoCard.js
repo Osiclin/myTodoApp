@@ -5,17 +5,22 @@ import TodoDetails from './TodoDetails'
 import React, { useState, useEffect } from 'react'
 import styles from '../styles/TodoCard.module.css'
 import Blob from './Blob'
-import Link from 'next/link'
 import FormTitle from './FormTitle'
+import { useRouter } from 'next/router'
 
 export default function TodoCard() {
+    const [loading, setLoading] = useState(true)
     const [todos, setTodos] = useState([])
     const [user, setUser] = useState()
+    const router = useRouter()
 
     const  DeleteTodo = (id) => {
         const token = sessionStorage.getItem("token")
+        const newTodos = todos.filter(todo => todo._id !== id)
 
-        fetch(`https://api.uatdrive.com:1012/todos/${id}`, {
+        setTodos(newTodos)
+
+        fetch(`https://api.uatdrive.com:1012/todos/edit/${id}`, {
             method: "DELETE",
             headers: {
             "Authorization": `Bearer ${token}`,
@@ -23,11 +28,8 @@ export default function TodoCard() {
         }).then(response => response.json())
     }
 
-    const EditTodo = () => {
-        alert('hey')
-    }
-
     useEffect(() => {
+        let mounted = true
         const token = sessionStorage.getItem("token")
 
         fetch("https://api.uatdrive.com:1012/todos/current/user", {
@@ -39,10 +41,15 @@ export default function TodoCard() {
         })
         .then(response => response.json())
         .then(todos => {
-            setTodos(todos.data)
-            console.log(todos)})
+            if (mounted) {
+                setTodos(todos.data)
+            }
+        })
         .catch(err => console.log(err))
-    }, [todos])
+
+        setLoading(false)
+        return () => mounted = false
+    }, [])
 
     useEffect(() => {
         const user = sessionStorage.getItem("user");
@@ -51,7 +58,6 @@ export default function TodoCard() {
 
     return(
         <>
-            {/* <FormTitle title={user + "'s" + " Todo"} /> */}
             <FormTitle title={`${user}'s Todo`} />
             <ul className={styles.todoclasscontainer}>
                 
@@ -64,17 +70,14 @@ export default function TodoCard() {
                         <TodoTitle title={todo.Title}/>
                         <TodoDetails details={todo.TodoDetails} />
                         <div className={styles.buttons}>
-                            <Link href="/todos/edit">
-                                <a>
-                                    <button className={styles.edit} onClick={() => EditTodo(todo._id)}>Edit</button>
-                                </a>
-                            </Link>
+                            <button className={styles.edit} onClick={() => router.push(`/todos/${todo._id}`)}>Edit</button>
                             <button className={styles.delete} onClick={() => DeleteTodo(todo._id)}>Delete</button>
                         </div>
                     </li>
                     
                 )}
             </ul>
+            <div style={{textAlign: "center"}}>{loading ? <p>Loading...</p> : <p></p>}</div>
         </>
     )
 }

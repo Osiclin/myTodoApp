@@ -29,7 +29,7 @@ export default function Mytodos() {
                         <a><li>My Todos</li></a>
                     </Link>
 
-                    <Link href="/login">
+                    <Link href="/" replace>
                         <a><li>Sign Out</li></a>
                     </Link>
                     

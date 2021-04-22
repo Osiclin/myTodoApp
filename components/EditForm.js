@@ -3,69 +3,98 @@ import Button from './Button'
 import FormTitle from "./FormTitle";
 import Textarea from "./Textarea";
 import styles from '../styles/CreateForm.module.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 export default function EditForm() {
-    const [saveStatus, setSavestatus] = useState("Save")
-    const [message, setMessage] = useState('Saving')
-    const [msgclass, setMsgClass] = useState(styles.success)
-
-
-    const CreateTodo = (e) => {
-        e.preventDefault();
-        setSavestatus('Saving...')
-
-        const token = sessionStorage.getItem("token")
-        const title = document.getElementsByClassName('title')[0].value
-        const todoDetails = document.getElementById('todoDetails').value
-        
+    const [path, setPath] = useState()
+    const [token, setToken] = useState()
+    const [msgclass, setMsgClass] = useState(styles.messagehide)
+    const [message, setMessage] = useState()
+    const [state, setState] = useState({
+        title: '',
+        details: ''
+    })
     
-        if(title !== "" && todoDetails !== "") {
-            setSavestatus("Saving...")
-    
-            fetch("https://api.uatdrive.com:1012/todos", {
-            method: "POST",
-            body: JSON.stringify({
-                Title: title,
-                todoDetails: todoDetails,
-            }),
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json; charset=UTF-8"
-            },
-            })
-            .then(response => response.json())
-            .then(data => (data))
-            .catch(err => {
-                if(err) {
-                    setSavestatus('Oops!!! Not a user')
-                } else {
-            setTimeout(() => {
-                setSavestatus('Saved')
-            },3000)
-            setSavestatus('Save')}})
-        } else {
-            setSavestatus('Save')
-        }   
+    const handleChange = (e) => {
+        const target = e.target
+        const value = target.value
+        const name = target.name
+        setState({
+            ...state,
+            [name]: value
+        })
     }
+    
+    const Update = (e) => {
+        e.preventDefault()
 
+        if (state.title !== ''  && state.details !== '') {
+            setMsgClass(styles.saving)
+            setMessage('Editing...')
+            fetch(`https://api.uatdrive.com:1012${path}`, {
+                method: "PUT",
+                headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json; charset=utf-8"
+                },
+                body: JSON.stringify({
+                    Title: state.title,
+                    todoDetails: state.details
+                })
+            })
+            .then(response => {
+                response.json()
+                setTimeout(() => {
+                    setMsgClass(styles.success)
+                    setMessage('Edited')
+                },2000)
+                setTimeout(() => {
+                    setMsgClass(styles.messagehide)
+                },5000)
+            })
+            .catch(err => console.log(err))
+        }
+    }//
+
+    useEffect(() => {
+        const getToken = sessionStorage.getItem("token")
+        setToken(getToken)
+        const pathName = window.location.pathname
+        setPath(pathName)
+
+        fetch(`https://api.uatdrive.com:1012${pathName}`, {
+            method: "GET",
+            headers: {
+            "Authorization": `Bearer ${getToken}`,
+            "Content-Type": "application/json; charset=utf-8"
+            }
+        })
+        .then(response => response.json())
+        .then(todo => {
+            setState({
+                title: todo.data.Title,
+                details: todo.data.TodoDetails
+            }) 
+        })
+        .catch(err => console.log(err))
+        
+    }, [])
 
     return(
-        <form onSubmit={CreateTodo}>
-            {/* <div className={msgclass}>
+        <form onSubmit={Update}>
+            <div className={msgclass}>
                 <p>{message}</p>
-            </div> */}
+            </div>
             <FormTitle title="Edit Todo" />
             <div className={styles.datentitle}>
                 <div>
                 <label htmlFor="date">Date</label><br />
                 <input htmlFor="date" className={styles.date} type="date" name="date" />
                 </div>
-                <Input for="title" class="title" label="Title" type="title" name="title" />
+                <Input for="title" class="title" label="Title" type="text" name="title" value={state.title} onChange={handleChange} />
             </div>
-            <Textarea id="todoDetails"/>
-            <Button value="Save" />
+            <Textarea id="todoDetails" name="details" value={state.details} onChange={handleChange} />
+            <Button value="Update" />
         </form>
     )
 }
-

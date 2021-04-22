@@ -8,7 +8,7 @@ import stylesham from '../../styles/Hamburger.module.css'
 import stylesmenu from '../../styles/Menu.module.css'
 
 
-export default function EditTodo() {
+export default function Edit() {
     return(
         <div className={styles.container}>
             <Head>
@@ -27,11 +27,11 @@ export default function EditTodo() {
                         <a><li>Create Todo</li></a>
                     </Link>
                     
-                    <Link href="/mytodos">
+                    <Link href="/todos">
                         <a><li>My Todos</li></a>
                     </Link>
 
-                    <Link href="/login">
+                    <Link href="/">
                         <a><li>Sign Out</li></a>
                     </Link>
                     
@@ -48,3 +48,5 @@ export default function EditTodo() {
         </div>
     )
 }
+
+
