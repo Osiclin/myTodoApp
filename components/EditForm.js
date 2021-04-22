@@ -10,25 +10,27 @@ export default function EditForm() {
     const [token, setToken] = useState()
     const [msgclass, setMsgClass] = useState(styles.messagehide)
     const [message, setMessage] = useState()
-    const [state, setState] = useState({
-        title: '',
-        details: ''
-    })
+    // const [state, setState] = useState({
+    //     title: '',
+    //     details: ''
+    // })
+    const [title, setTitle] = useState('')
+    const [details, setDetails] = useState('')
     
-    const handleChange = (e) => {
-        const target = e.target
-        const value = target.value
-        const name = target.name
-        setState({
-            ...state,
-            [name]: value
-        })
+    const handleTitle = (e) => {
+        setTitle(e.target.value)
+        console.log(title)
+    }
+
+    const handleDetails = (e) => {
+        setDetails(e.target.value)
+        console.log(details)
     }
     
     const Update = (e) => {
         e.preventDefault()
 
-        if (state.title !== ''  && state.details !== '') {
+        if (title !== '' && details !== '') {
             setMsgClass(styles.saving)
             setMessage('Editing...')
             fetch(`https://api.uatdrive.com:1012${path}`, {
@@ -38,8 +40,8 @@ export default function EditForm() {
                 "Content-Type": "application/json; charset=utf-8"
                 },
                 body: JSON.stringify({
-                    Title: state.title,
-                    todoDetails: state.details
+                    Title: title,
+                    TodoDetails: details
                 })
             })
             .then(response => {
@@ -57,27 +59,29 @@ export default function EditForm() {
     }//
 
     useEffect(() => {
-        const getToken = sessionStorage.getItem("token")
-        setToken(getToken)
-        const pathName = window.location.pathname
-        setPath(pathName)
+        let mounted = true
 
-        fetch(`https://api.uatdrive.com:1012${pathName}`, {
-            method: "GET",
-            headers: {
-            "Authorization": `Bearer ${getToken}`,
-            "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then(response => response.json())
-        .then(todo => {
-            setState({
-                title: todo.data.Title,
-                details: todo.data.TodoDetails
-            }) 
-        })
-        .catch(err => console.log(err))
-        
+        if (mounted) {
+            const getToken = sessionStorage.getItem("token")
+            setToken(getToken)
+            const pathName = window.location.pathname
+            setPath(pathName)
+
+            fetch(`https://api.uatdrive.com:1012${pathName}`, {
+                method: "GET",
+                headers: {
+                "Authorization": `Bearer ${getToken}`,
+                "Content-Type": "application/json; charset=utf-8"
+                }
+            })
+            .then(response => response.json())
+            .then(todo => {
+                setTitle(todo.data.Title)
+                setDetails(todo.data.TodoDetails)    
+            })
+            .catch(err => console.log(err))
+        }
+        mounted = false
     }, [])
 
     return(
@@ -91,9 +95,9 @@ export default function EditForm() {
                 <label htmlFor="date">Date</label><br />
                 <input htmlFor="date" className={styles.date} type="date" name="date" />
                 </div>
-                <Input for="title" class="title" label="Title" type="text" name="title" value={state.title} onChange={handleChange} />
+                <Input for="title" class="title" label="Title" type="text" name="title" value={title} onChange={(e) => handleTitle(e)} />
             </div>
-            <Textarea id="todoDetails" name="details" value={state.details} onChange={handleChange} />
+            <Textarea id="todoDetails" name="details" value={details} onChange={(e) => handleDetails(e)} />
             <Button value="Update" />
         </form>
     )

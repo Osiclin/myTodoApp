@@ -11,7 +11,6 @@ import { useEffect } from 'react'
 export default function Mytodos() {
     useEffect(() => {
         const token = sessionStorage.getItem("token")
-        console.log(token)
         if (token == "undefined") {
             window.location.assign('/')
         } else {}
