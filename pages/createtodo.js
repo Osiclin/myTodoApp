@@ -38,7 +38,7 @@ export default function Createtodo() {
                     <a><li>My Todos</li></a>
                 </Link>
 
-                    <a><li onClick={() => SignOut(e)}>Sign Out</li></a>
+                    <a><li onClick={(e) => SignOut(e)}>Sign Out</li></a>
                 
             </ul>
             <div id={stylesham.hamburger}>
