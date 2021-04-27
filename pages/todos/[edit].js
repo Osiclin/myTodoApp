@@ -9,6 +9,13 @@ import stylesmenu from '../../styles/Menu.module.css'
 
 
 export default function Edit() {
+    const SignOut = (e) => {
+        e.preventDefault()
+        
+        location.replace('/')
+        document.cookie = `user=;`
+    }
+
     return(
         <div className={styles.container}>
             <Head>
@@ -31,9 +38,7 @@ export default function Edit() {
                         <a><li>My Todos</li></a>
                     </Link>
 
-                    <Link href="/">
-                        <a><li>Sign Out</li></a>
-                    </Link>
+                    <a><li onClick={(e) => SignOut(e)}>Sign Out</li></a>
                     
                 </ul>
                 <div id={stylesham.hamburger}>
@@ -50,3 +55,19 @@ export default function Edit() {
 }
 
 
+export async function getServerSideProps(context) {
+    //get cookie using nextjs context
+    const decodedCookie = context.req.headers.cookie
+    if(!decodedCookie || decodedCookie == '' || decodedCookie == 'undefined' || decodedCookie == 'user=') {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            },
+        }
+    }
+
+    return {
+        props: {}
+    }
+}

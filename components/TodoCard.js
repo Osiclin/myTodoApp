@@ -5,13 +5,11 @@ import TodoDetails from './TodoDetails'
 import React, { useState, useEffect } from 'react'
 import styles from '../styles/TodoCard.module.css'
 import Blob from './Blob'
-import FormTitle from './FormTitle'
 import { useRouter } from 'next/router'
 
 export default function TodoCard() {
     const [loading, setLoading] = useState(true)
     const [todos, setTodos] = useState([])
-    const [user, setUser] = useState()
     const router = useRouter()
 
     const  DeleteTodo = (id) => {
@@ -56,16 +54,9 @@ export default function TodoCard() {
         }
     }, [])
 
-    useEffect(() => {
-        const user = sessionStorage.getItem("user");
-        setUser(user)
-    }, [])
-
     return(
         <>
-            <FormTitle title={`${user}'s Todo`} />
             <ul className={styles.todoclasscontainer}>
-                
                 {todos.map((todo) => 
                     
                     <li className={styles.todocard} key={todo._id}>

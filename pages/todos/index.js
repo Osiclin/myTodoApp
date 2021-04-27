@@ -6,15 +6,15 @@ import Link from 'next/link'
 import styleslogo from '../../styles/Logo.module.css'
 import stylesham from '../../styles/Hamburger.module.css'
 import stylesmenu from '../../styles/Menu.module.css'
-import { useEffect } from 'react'
+import FormTitle from '../../components/FormTitle'
 
-export default function Mytodos() {
-    useEffect(() => {
-        const token = sessionStorage.getItem("token")
-        if (token == "undefined") {
-            window.location.assign('/')
-        } else {}
-    }, [])
+export default function Mytodos(user) {
+    const SignOut = (e) => {
+        e.preventDefault()
+        
+        location.replace('/')
+        document.cookie = `user=;`
+    }
 
     return(
         <div className={styles.container}>
@@ -37,9 +37,7 @@ export default function Mytodos() {
                         <a><li>My Todos</li></a>
                     </Link>
 
-                    <Link href="/" replace>
-                        <a><li>Sign Out</li></a>
-                    </Link>
+                    <a><li onClick={(e) => SignOut(e)}>Sign Out</li></a>
                     
                 </ul>
                 <div id={stylesham.hamburger}>
@@ -49,11 +47,32 @@ export default function Mytodos() {
             
 
             <main className={styles.maintodo}>
-
+                <FormTitle title={`${user.user}'s Todo`} />
                 <TodoCard />
                 
             </main>
         
         </div>
     )
+}
+
+
+export async function getServerSideProps(context) {
+    //get cookie using nextjs context
+    const decodedCookie = context.req.headers.cookie
+    if(!decodedCookie || decodedCookie == '' || decodedCookie == 'undefined' || decodedCookie == 'user=') {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            },
+        }
+    }
+
+    //remove cookie name and "=" from the user cookie
+    const user = decodedCookie.substr(5)
+
+    return {
+        props: { user }
+    }
 }

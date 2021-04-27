@@ -9,6 +9,13 @@ import stylesmenu from '../styles/Menu.module.css'
 
 
 export default function Createtodo() {
+    const SignOut = (e) => {
+        e.preventDefault()
+        
+        location.replace('/')
+        document.cookie = `user=;`
+    }
+
     return(
         <div className={styles.container}>
             <Head>
@@ -31,9 +38,7 @@ export default function Createtodo() {
                     <a><li>My Todos</li></a>
                 </Link>
 
-                <Link href="/" replace>
-                    <a><li>Sign Out</li></a>
-                </Link>
+                    <a><li onClick={() => SignOut(e)}>Sign Out</li></a>
                 
             </ul>
             <div id={stylesham.hamburger}>
@@ -48,4 +53,21 @@ export default function Createtodo() {
         
         </div>
     )
+}
+
+export async function getServerSideProps(context) {
+    //get cookie using nextjs context
+    const decodedCookie = context.req.headers.cookie
+    if(!decodedCookie || decodedCookie == '' || decodedCookie == 'undefined' || decodedCookie == 'user=') {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            },
+        }
+    }
+
+    return {
+        props: {}
+    }
 }

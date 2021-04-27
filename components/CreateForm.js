@@ -11,7 +11,6 @@ export default function CreateForm() {
 
     useEffect(() => {
         const token = sessionStorage.getItem("token")
-        console.log(token)
         if (token == "undefined") {
             window.location.assign('/')
         } else {}

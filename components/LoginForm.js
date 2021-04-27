@@ -44,10 +44,8 @@ export default function LoginForm() {
                     setToken(data.token)
                     setMsgClass(styles.success)
                     setMessage('User logged in')
-                    sessionStorage.setItem("user", email)
-                    setTimeout(() => {
-                        window.location.assign('/todos')
-                    }, 2000)  
+                    document.cookie = `user=${email}`
+                    location.assign('/todos') 
                 }
             })
             .catch(err => console.log(err))
@@ -57,7 +55,6 @@ export default function LoginForm() {
     useEffect(() => {
         sessionStorage.setItem("token", token)
     })
-
 
     return(
         <form onSubmit={Login}>
